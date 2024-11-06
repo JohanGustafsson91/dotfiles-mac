@@ -1,1 +1,96 @@
-/Users/johangustafsson/.config/aerospace/aerospace.toml
+# Reference: https://github.com/i3/i3/blob/next/etc/config
+
+# i3 doesn't have "normalizations" feature that why we disable them here.
+# But the feature is very helpful.
+# Normalizations eliminate all sorts of weird tree configurations that don't make sense.
+# Give normalizations a chance and enable them back.
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = false
+
+start-at-login = true
+
+# Mouse follows focus when focused monitor changes
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+[mode.main.binding]
+# See: https://nikitabobko.github.io/AeroSpace/goodness#open-a-new-window-with-applescript
+alt-enter = '''exec-and-forget osascript -e '
+tell application "iTerm2"
+  create window with default profile
+end tell'
+'''
+
+# i3 wraps focus by default
+alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
+alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
+alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
+alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
+alt-o = 'split horizontal'
+alt-v = 'split vertical'
+
+alt-f = 'fullscreen'
+
+alt-tab = 'workspace-back-and-forth'
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+alt-s = 'layout v_accordion' # 'layout stacking' in i3
+alt-w = 'layout h_accordion' # 'layout tabbed' in i3
+alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
+
+alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+
+alt-f1 = 'workspace Browser'
+alt-f2 = 'workspace 2'
+alt-f3 = 'workspace 3'
+alt-f4 = 'workspace 4'
+alt-f5 = 'workspace 5'
+alt-f6 = 'workspace 6'
+alt-f7 = 'workspace 7'
+alt-f8 = 'workspace Mail'
+alt-f9 = 'workspace Slack'
+alt-f10 = 'workspace Spotify'
+
+alt-shift-f1 = 'move-node-to-workspace Browser'
+alt-shift-f2 = 'move-node-to-workspace 2'
+alt-shift-f3 = 'move-node-to-workspace 3'
+alt-shift-f4 = 'move-node-to-workspace 4'
+alt-shift-f5 = 'move-node-to-workspace 5'
+alt-shift-f6 = 'move-node-to-workspace 6'
+alt-shift-f7 = 'move-node-to-workspace 7'
+alt-shift-f8 = 'move-node-to-workspace Mail'
+alt-shift-f9 = 'move-node-to-workspace Slack'
+alt-shift-f10 = 'move-node-to-workspace Spotify'
+
+alt-shift-c = 'reload-config'
+
+alt-r = 'mode resize'
+
+[mode.resize.binding]
+h = 'resize width -50'
+k = 'resize height +50'
+j = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
+
+# Gaps between windows (inner-*) and between monitor edges (outer-*).
+# Possible values:
+# - Constant:     gaps.outer.top = 8
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                 In this example, 24 is a default value when there is no match.
+#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
+#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[gaps]
+inner.horizontal = 12
+inner.vertical =   12
+outer.left =       12
+outer.bottom =     12
+outer.top =        12
+outer.right =      12
