@@ -28,20 +28,27 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
+-- Folding
+vim.o.foldmethod = "indent" -- Use indentation to define folds
+vim.o.foldlevel = 0 -- Start with all folds closed
+vim.o.foldnestmax = 1 -- Set maximum nesting level for folds
+-- Disable folding in Telescope's result window.
+vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })
+
 -- Disable arrow keys in normal mode
--- keymap.set("n", "<Up>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("n", "<Down>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("n", "<Left>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("n", "<Right>", "<Nop>", { noremap = true, silent = true })
---
--- -- Disable arrow keys in insert mode
--- keymap.set("i", "<Up>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("i", "<Down>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("i", "<Left>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("i", "<Right>", "<Nop>", { noremap = true, silent = true })
---
--- -- Disable arrow keys in visual mode
--- keymap.set("v", "<Up>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("v", "<Down>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("v", "<Left>", "<Nop>", { noremap = true, silent = true })
--- keymap.set("v", "<Right>", "<Nop>", { noremap = true, silent = true })
+keymap.set("n", "<Up>", "<Nop>", { noremap = true, silent = true })
+keymap.set("n", "<Down>", "<Nop>", { noremap = true, silent = true })
+keymap.set("n", "<Left>", "<Nop>", { noremap = true, silent = true })
+keymap.set("n", "<Right>", "<Nop>", { noremap = true, silent = true })
+
+-- Disable arrow keys in insert mode
+keymap.set("i", "<Up>", "<Nop>", { noremap = true, silent = true })
+keymap.set("i", "<Down>", "<Nop>", { noremap = true, silent = true })
+keymap.set("i", "<Left>", "<Nop>", { noremap = true, silent = true })
+keymap.set("i", "<Right>", "<Nop>", { noremap = true, silent = true })
+
+-- Disable arrow keys in visual mode
+keymap.set("v", "<Up>", "<Nop>", { noremap = true, silent = true })
+keymap.set("v", "<Down>", "<Nop>", { noremap = true, silent = true })
+keymap.set("v", "<Left>", "<Nop>", { noremap = true, silent = true })
+keymap.set("v", "<Right>", "<Nop>", { noremap = true, silent = true })
