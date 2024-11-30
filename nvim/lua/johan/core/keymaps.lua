@@ -28,10 +28,31 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
+-- Buffers
+local opts = { noremap = true, silent = true }
+keymap.set("n", "<leader>bl", ":ls<CR>:b<Space>", opts) -- List buffers and allow quick selection
+keymap.set("n", "<leader>bn", ":bn<CR>", opts)
+keymap.set("n", "<leader>bp", ":bp<CR>", opts)
+
+keymap.set("n", "<C-u>", "<C-u>zz", {})
+keymap.set("n", "<C-d>", "<C-d>zz", {})
+keymap.set("n", "<C-b>", "<C-b>zz", {})
+keymap.set("n", "<C-f>", "<C-f>zz", {})
+
 -- Folding
 vim.o.foldmethod = "indent" -- Use indentation to define folds
-vim.o.foldlevel = 0 -- Start with all folds closed
 vim.o.foldnestmax = 1 -- Set maximum nesting level for folds
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function()
+		local total_lines = vim.fn.line("$") -- Get the total number of lines in the file
+		if total_lines > 52 then
+			vim.wo.foldlevel = 0 -- Close all folds
+		else
+			vim.wo.foldlevel = 99 -- Open all folds for smaller files
+		end
+	end,
+})
 -- Disable folding in Telescope's result window.
 vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })
 
