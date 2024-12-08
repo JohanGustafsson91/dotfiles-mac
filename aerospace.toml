@@ -53,7 +53,7 @@ alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
 alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
 
 alt-f1 = 'workspace Browser'
-alt-f2 = 'workspace 2'
+alt-f2 = 'workspace Code'
 alt-f3 = 'workspace 3'
 alt-f4 = 'workspace 4'
 alt-f5 = 'workspace 5'
@@ -64,7 +64,7 @@ alt-f9 = 'workspace Slack'
 alt-f10 = 'workspace Spotify'
 
 alt-shift-f1 = 'move-node-to-workspace Browser'
-alt-shift-f2 = 'move-node-to-workspace 2'
+alt-shift-f2 = 'move-node-to-workspace Code'
 alt-shift-f3 = 'move-node-to-workspace 3'
 alt-shift-f4 = 'move-node-to-workspace 4'
 alt-shift-f5 = 'move-node-to-workspace 5'
