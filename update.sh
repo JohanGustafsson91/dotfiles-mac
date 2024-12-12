@@ -8,3 +8,6 @@ cp -r ~/.config/nvim/ nvim
 
 echo "Copy tmux"
 cp -r ~/.tmux.conf .tmux.conf
+
+echo "Copy scripts"
+cp -r ~/.config/scripts/ scripts
