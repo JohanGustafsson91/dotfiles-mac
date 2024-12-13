@@ -11,3 +11,6 @@ cp -r ~/.tmux.conf .tmux.conf
 
 echo "Copy scripts"
 cp -r ~/.config/scripts/ scripts
+
+echo "Copy aliases"
+cp ~/.zsh_aliases aliases
