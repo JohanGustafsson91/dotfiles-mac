@@ -10,6 +10,6 @@ alias worklogs='cd /Users/johangustafsson/code/toggl-to-jira && npm start'
 alias vscode-launch='bash ~/code/vscode-launch-as-command/index.sh'
 alias tmux-open-project='bash ~/.config/scripts/code-in-tmux.sh'
 alias fp='bash ~/.config/scripts/fuzzy-select-project.sh'
-alias tkm='bash ~/.config/scripts/kill-tmux-session.sh'
+alias tks='bash ~/.config/scripts/kill-tmux-session.sh'
 
 alias watch-surikat-client='browser-sync start --proxy "localhost:3000" --files "/Users/johangustafsson/code/surikat/lx-react-client/dev-www" --startPath "?api=http://localhost:3091&account=http://localhost:3999&tenant=kn"'

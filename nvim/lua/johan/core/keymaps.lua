@@ -40,8 +40,9 @@ keymap.set("n", "<C-b>", "<C-b>zz", {})
 keymap.set("n", "<C-f>", "<C-f>zz", {})
 
 -- Folding
+keymap.set("n", "<leader>faf", ":g/).*{$/norm! $zf%<CR>", { desc = "Fold all functions" })
 vim.o.foldmethod = "indent" -- Use indentation to define folds
-vim.o.foldnestmax = 1 -- Set maximum nesting level for folds
+-- vim.o.foldnestmax = 1 -- Set maximum nesting level for folds
 
 vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function()
@@ -53,6 +54,17 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end
 	end,
 })
+
+-- Center after search
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+	pattern = "/",
+	callback = function()
+		vim.defer_fn(function()
+			vim.cmd("normal! zz")
+		end, 100) -- Vänta 100ms innan zz körs
+	end,
+})
+
 -- Disable folding in Telescope's result window.
 vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })
 
