@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
 	callback = function()
 		vim.defer_fn(function()
 			vim.cmd("normal! zz")
-		end, 100) -- Vänta 100ms innan zz körs
+		end, 100)
 	end,
 })
 
