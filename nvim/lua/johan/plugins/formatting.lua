@@ -24,6 +24,13 @@ return {
 
 		-- Configure conform.nvim
 		conform.setup({
+			formatters = {
+				xmllint = {
+					command = "xmllint",
+					args = { "--format", "-" }, -- Formats XML from stdin
+					stdin = true,
+				},
+			},
 			formatters_by_ft = {
 				javascript = { get_formatters() },
 				typescript = { get_formatters() },
@@ -39,6 +46,8 @@ return {
 				liquid = { get_formatters() },
 				lua = { "stylua" },
 				python = { "isort", "black" },
+				xml = { "xmllint" },
+				xsl = { "xmllint" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

@@ -4,12 +4,23 @@ return {
 	config = function()
 		local lint = require("lint")
 
+		local function file_exists(filename)
+			local f = io.open(vim.fn.getcwd() .. "/" .. filename, "r")
+			if f then
+				f:close()
+				return true
+			end
+			return false
+		end
+
+		local use_biome = file_exists("biome.json") or file_exists("biome.config.json")
+
 		lint.linters_by_ft = {
-			javascript = { "biomejs" }, -- "eslint_d" },
-			typescript = { "biomejs" }, -- "eslint_d" },
-			javascriptreact = { "biomejs" }, -- "eslint_d" },
-			typescriptreact = { "biomejs" }, -- "eslint_d" },
-			svelte = { "biomejs" }, -- "eslint_d" },
+			javascript = { use_biome and "biomejs" or "eslint_d" },
+			typescript = { use_biome and "biomejs" or "eslint_d" },
+			javascriptreact = { use_biome and "biomejs" or "eslint_d" },
+			typescriptreact = { use_biome and "biomejs" or "eslint_d" },
+			svelte = { use_biome and "biomejs" or "eslint_d" },
 			python = { "pylint" },
 		}
 

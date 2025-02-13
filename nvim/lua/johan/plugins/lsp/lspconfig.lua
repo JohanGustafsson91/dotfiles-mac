@@ -140,6 +140,7 @@ return {
 						"scss",
 						"less",
 						"svelte",
+						"xml",
 					},
 				})
 			end,

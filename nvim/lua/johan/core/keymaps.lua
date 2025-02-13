@@ -55,13 +55,33 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 	end,
 })
 
--- Center after search
+local last_cursor_position = nil
+
+-- Center after search or after jumping to the next match
 vim.api.nvim_create_autocmd("CmdlineLeave", {
-	pattern = "/",
+	pattern = { "/", "?" },
 	callback = function()
 		vim.defer_fn(function()
 			vim.cmd("normal! zz")
 		end, 100) -- Vänta 100ms innan zz körs
+	end,
+})
+
+-- Center after * or n (next match)
+vim.api.nvim_create_autocmd("CursorMoved", {
+	callback = function()
+		local current_position = vim.api.nvim_win_get_cursor(0) -- [row, col]
+		local row_diff =
+			math.abs(current_position[1] - (last_cursor_position and last_cursor_position[1] or current_position[1]))
+
+		local search_info = vim.fn.searchcount()
+		if search_info.total > 0 and row_diff > 1 then
+			vim.defer_fn(function()
+				vim.cmd("normal! zz")
+			end, 100)
+		end
+
+		last_cursor_position = current_position
 	end,
 })
 
