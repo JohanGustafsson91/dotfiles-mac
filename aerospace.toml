@@ -10,10 +10,17 @@ enable-normalization-opposite-orientation-for-nested-containers = false
 # start-at-login = true
 
 after-startup-command = [
+    'exec-and-forget sketchybar',
     # JankyBorders has a built-in detection of already running process,
     # so it won't be run twice on AeroSpace restart
-    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+    'exec-and-forget borders active_color=0xff85c950 inactive_color=0xff494d64 width=6.0'
+    # 'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
 ]
+
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+on-focus-changed = ['move-mouse window-lazy-center']
 
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
@@ -37,6 +44,8 @@ alt-shift-j = 'move down'
 alt-shift-k = 'move up'
 alt-shift-l = 'move right'
 
+alt-shift-r = ['exec-and-forget /opt/homebrew/bin/sketchybar --reload']
+
 # Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
 alt-o = 'split horizontal'
 alt-v = 'split vertical'
@@ -52,31 +61,59 @@ alt-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
 
 alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
 
-alt-f1 = 'workspace Browser'
-alt-f2 = 'workspace Code'
+alt-f1 = 'workspace 1'
+alt-f2 = 'workspace 2'
 alt-f3 = 'workspace 3'
 alt-f4 = 'workspace 4'
-alt-f5 = 'workspace Docker'
-alt-f6 = 'workspace ChatGPT'
-alt-f7 = 'workspace Postman'
-alt-f8 = 'workspace Mail'
-alt-f9 = 'workspace Slack'
-alt-f10 = 'workspace Spotify'
+alt-f5 = 'workspace 5'
+alt-f6 = 'workspace 6'
+alt-f7 = 'workspace 7'
+alt-f8 = 'workspace 8'
+alt-f9 = 'workspace 9'
+alt-f10 = 'workspace 10'
 
-alt-shift-f1 = 'move-node-to-workspace Browser'
-alt-shift-f2 = 'move-node-to-workspace Code'
-alt-shift-f3 = 'move-node-to-workspace 3'
-alt-shift-f4 = 'move-node-to-workspace 4'
-alt-shift-f5 = 'move-node-to-workspace Docker'
-alt-shift-f6 = 'move-node-to-workspace ChatGPT'
-alt-shift-f7 = 'move-node-to-workspace Postman'
-alt-shift-f8 = 'move-node-to-workspace Mail'
-alt-shift-f9 = 'move-node-to-workspace Slack'
-alt-shift-f10 = 'move-node-to-workspace Spotify'
+alt-shift-f1 = [ 'move-node-to-workspace 1', 'workspace 1 ']
+alt-shift-f2 = [ 'move-node-to-workspace 2', 'workspace 2 ']
+alt-shift-f3 = [ 'move-node-to-workspace 3', 'workspace 3 ']
+alt-shift-f4 = [ 'move-node-to-workspace 4', 'workspace 4 ']
+alt-shift-f5 = [ 'move-node-to-workspace 5', 'workspace 5 ']
+alt-shift-f6 = [ 'move-node-to-workspace 6', 'workspace 6 ']
+alt-shift-f7 = [ 'move-node-to-workspace 7', 'workspace 7 ']
+alt-shift-f8 = [ 'move-node-to-workspace 8', 'workspace 8 ']
+alt-shift-f9 = [ 'move-node-to-workspace 9', 'workspace 9 ']
+alt-shift-f10 = [ 'move-node-to-workspace 10', 'workspace 10 ']
 
-alt-shift-c = 'reload-config'
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = "move-node-to-workspace 1"
 
-alt-r = 'mode resize'
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = "move-node-to-workspace 2"
+
+[[on-window-detected]]
+if.app-id = 'com.openai.chat'
+run = "move-node-to-workspace 6"
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = "move-node-to-workspace 7"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = "move-node-to-workspace 8"
+
+[[on-window-detected]]
+if.app-id = 'com.toggl.daneel'
+run = "move-node-to-workspace 8"
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = "move-node-to-workspace 9"
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = "move-node-to-workspace 10"
 
 [mode.resize.binding]
 h = 'resize width -50'
@@ -85,6 +122,9 @@ j = 'resize height -50'
 l = 'resize width +50'
 enter = 'mode main'
 esc = 'mode main'
+
+alt-shift-c = 'reload-config'
+alt-r = 'mode resize'
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -97,6 +137,6 @@ esc = 'mode main'
 inner.horizontal = 12
 inner.vertical =   12
 outer.left =       12
-outer.bottom =     12
 outer.top =        12
+outer.bottom =     [{ monitor."Built-in" = 62 }, 62]
 outer.right =      12

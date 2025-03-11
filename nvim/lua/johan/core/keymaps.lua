@@ -28,9 +28,16 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
--- Buffers
 local opts = { noremap = true, silent = true }
-keymap.set("n", "<leader>bl", ":ls<CR>:b<Space>", opts) -- List buffers and allow quick selection
+
+keymap.set("n", "<leader>fgs", ":Telescope git_status<CR>", opts)
+keymap.set("n", "<leader>fgb", ":Telescope git_branches<CR>", opts)
+keymap.set("n", "<leader>fgc", ":Telescope git_commits<CR>", opts)
+
+keymap.set("n", "<leader><space>", "/", { desc = "Open search" })
+
+-- Buffers
+keymap.set("n", "<leader>bl", ":Telescope buffers<CR>", opts) -- List buffers and allow quick selection
 keymap.set("n", "<leader>bn", ":bn<CR>", opts)
 keymap.set("n", "<leader>bp", ":bp<CR>", opts)
 
@@ -63,7 +70,7 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
 	callback = function()
 		vim.defer_fn(function()
 			vim.cmd("normal! zz")
-		end, 100)
+		end, 1)
 	end,
 })
 
@@ -78,7 +85,7 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 		if search_info.total > 0 and row_diff > 1 then
 			vim.defer_fn(function()
 				vim.cmd("normal! zz")
-			end, 100)
+			end, 1)
 		end
 
 		last_cursor_position = current_position

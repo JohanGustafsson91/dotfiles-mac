@@ -2,7 +2,6 @@ alias git='LANG=en_GB git'
 
 alias ll="ls -all"
 alias cat='bat'
-alias vim='nvim'
 
 alias persist-ssh='eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa'
 
