@@ -46,10 +46,11 @@ if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
     # Highlight the active workspace with Tokyo Night styling
     sketchybar --set space.$sid \
         background.drawing=on \
-        icon.color=0xfff0f0f0  \
-        label.color=0xfff0f0f0  \
+        icon.color=0xffffffff  \
+        label.color=0xffffffff  \
         icon="$1" \
         background.color=0xff020d18 \
+        icon.font="$FONT:bold:12.0" \
         label="$LABEL"
 else
     # Normal state for inactive workspaces
@@ -57,10 +58,8 @@ else
         background.drawing=on \
         label="$LABEL" \
         icon="$1" \
-        icon.color=0x4C566AFF \
-        color=0x4C566AFF \
-        label.color=0x4C566AFF \
-        background.border_width=1.5 \
-        background.color=0xff020d18 \
-        background.border_color=0xff020d18
+        icon.color=0xff627e97 \
+        color=0xff627e97 \
+        label.color=0xff627e97 \
+        background.color=0xff020d18
 fi
