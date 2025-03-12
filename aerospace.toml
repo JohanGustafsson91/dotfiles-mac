@@ -137,6 +137,6 @@ alt-r = 'mode resize'
 inner.horizontal = 12
 inner.vertical =   12
 outer.left =       12
-outer.top =        12
-outer.bottom =     [{ monitor."Built-in" = 62 }, 62]
+outer.bottom =        12
+outer.top =     [{ monitor."Built-in" = 22 }, 62]
 outer.right =      12

@@ -304,7 +304,7 @@ function __icon_map() {
         icon_result=":iris:"
         ;;
    "iTerm" | "iTerm2")
-        icon_result=":iterm:"
+        icon_result=":vim:"
         ;;
    "Jellyfin Media Player")
         icon_result=":jellyfin:"

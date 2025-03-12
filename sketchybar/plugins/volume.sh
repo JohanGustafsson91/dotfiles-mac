@@ -16,5 +16,5 @@ if [ "$SENDER" = "volume_change" ]; then
     *) ICON="󰖁"
   esac
 
-  sketchybar --set "$NAME" icon="$ICON" label="$VOLUME%"
+  sketchybar --set "$NAME" icon="$ICON" label="$VOLUME%" icon.padding_left=10 icon.padding_right=5 label.padding_right=10 click_script="open x-apple.systempreferences:com.apple.Sound-Settings.extension"
 fi
