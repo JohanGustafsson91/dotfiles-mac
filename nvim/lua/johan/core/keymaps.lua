@@ -34,6 +34,7 @@ keymap.set("n", "<leader>fgs", ":Telescope git_status<CR>", opts)
 keymap.set("n", "<leader>fgb", ":Telescope git_branches<CR>", opts)
 keymap.set("n", "<leader>fgc", ":Telescope git_commits<CR>", opts)
 
+keymap.set("n", "<leader>p", '"0p', { desc = "Paste and keep in buffer" })
 keymap.set("n", "<leader><space>", "/", { desc = "Open search" })
 
 -- Buffers

@@ -27,11 +27,7 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 [mode.main.binding]
 # See: https://nikitabobko.github.io/AeroSpace/goodness#open-a-new-window-with-applescript
-alt-enter = '''exec-and-forget osascript -e '
-tell application "iTerm2"
-  create window with default profile
-end tell'
-'''
+alt-enter = '''exec-and-forget open -na Alacritty'''
 
 # i3 wraps focus by default
 alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
@@ -83,12 +79,23 @@ alt-shift-f8 = [ 'move-node-to-workspace 8', 'workspace 8 ']
 alt-shift-f9 = [ 'move-node-to-workspace 9', 'workspace 9 ']
 alt-shift-f10 = [ 'move-node-to-workspace 10', 'workspace 10 ']
 
+alt-shift-c = 'reload-config'
+alt-r = 'mode resize'
+
+[mode.resize.binding]
+h = 'resize width -50'
+k = 'resize height +50'
+j = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
+
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = "move-node-to-workspace 1"
 
 [[on-window-detected]]
-if.app-id = 'com.googlecode.iterm2'
+if.app-id = 'org.alacritty'
 run = "move-node-to-workspace 2"
 
 [[on-window-detected]]
@@ -115,17 +122,6 @@ run = "move-node-to-workspace 9"
 if.app-id = 'com.spotify.client'
 run = "move-node-to-workspace 10"
 
-[mode.resize.binding]
-h = 'resize width -50'
-k = 'resize height +50'
-j = 'resize height -50'
-l = 'resize width +50'
-enter = 'mode main'
-esc = 'mode main'
-
-alt-shift-c = 'reload-config'
-alt-r = 'mode resize'
-
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
 # - Constant:     gaps.outer.top = 8
@@ -138,5 +134,5 @@ inner.horizontal = 12
 inner.vertical =   12
 outer.left =       12
 outer.bottom =        12
-outer.top =     [{ monitor."Built-in" = 22 }, 62]
+outer.top =     [{ monitor."Built-in" = 12 }, 40]
 outer.right =      12

@@ -1,4 +1,5 @@
 alias git='LANG=en_GB git'
+alias vim='nvim'
 
 alias ll="ls -all"
 alias cat='bat'

@@ -17,3 +17,6 @@ cp ~/.zsh_aliases aliases
 
 echo "Copy sketchybar"
 cp -r ~/.config/sketchybar/ sketchybar
+
+echo "Copy alacritty"
+cp -r ~/.config/alacritty/ alacritty

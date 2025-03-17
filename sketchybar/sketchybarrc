@@ -1,53 +1,50 @@
 #!/bin/bash
 
+echo $CONFIG_DIR
+source "$CONFIG_DIR/colors.sh"
+
 PLUGIN_DIR="$CONFIG_DIR/plugins"
-FONT="MesloLGL Nerd Font Propo"
+ITEM_DIR="$CONFIG_DIR/items"
+FONT="SF Pro"
+# FONT="MesloLGL Nerd Font Propo"
 
 sketchybar --add event aerospace_workspace_change
 
-##### Bar Appearance #####
-
 bar=(
   height=37
-  color=0x00000000
+  color=$BAR_COLOR
   position=top
   sticky=on
-  padding_right=0
+  padding_right=5
   padding_left=10
   notch_width=0
 )
 
 sketchybar --bar "${bar[@]}"
 
-##### Changing Defaults #####
-# https://felixkratz.github.io/SketchyBar/config/items
-
 default=(
   padding_left=0
-  padding_right=0
+  padding_right=10
   background.height=25
   background.corner_radius=5
   icon.font="$FONT:Regular:19.0"
-  label.font="$FONT:Regular:12.0"
-  icon.color=0xffffffff  # Icon color: White
-  label.color=0xffffffff  # Label color: White
+  label.font="$FONT:Semibold:12.0"
+  icon.color=$WHITE  
+  label.color=$WHITE
   icon.padding_left=0
   icon.padding_right=0
   label.padding_left=0
   label.padding_right=0
+  popup.background.border_width=2
+  popup.background.corner_radius=9
+  popup.background.border_color=$POPUP_BORDER_COLOR
+  popup.background.color=$POPUP_BACKGROUND_COLOR
+  popup.blur_radius=20
+  popup.align=left
+  popup.background.shadow.drawing=on
 )
 
 sketchybar --default "${default[@]}"
-
-# for m in $(aerospace list-monitors | awk '{print $1}'); do
-#   # Query the displays and extract the JSON using sketchybar
-#   json=$(sketchybar --query displays)
-#
-# # Find the arrangement-id corresponding to the monitor $m
-# arrangement_id=$(echo "$json" | jq -r --arg monitor "$m" '.[] | select(.DirectDisplayID | tostring == $monitor) | .["arrangement-id"]')
-#
-# # Find the index of this arrangement-id in the JSON
-# index=$(echo "$json" | jq -r --arg monitor "$m" 'to_entries | map(select(.value."DirectDisplayID" | tostring == $monitor)) | .[0].key')
 
 for sid in $(aerospace list-workspaces --all); do
   sketchybar --add item space.$sid left \
@@ -55,28 +52,28 @@ for sid in $(aerospace list-workspaces --all); do
     --set space.$sid \
     background.height=25 \
     background.drawing=on \
-    label.color=0xFFFFFFFF \
+    label.color="$WHITE" \
     label.font="sketchybar-app-font:Regular:16.0" \
     icon.font="$FONT:Regular:12.0" \
     icon.padding_left=10 \
     icon.padding_right=5 \
     label.padding_left=5 \
     label.padding_right=5 \
+    padding_left=0 \
+    padding_right=0 \
     click_script="aerospace workspace $sid" \
     script="$CONFIG_DIR/plugins/aerospace.sh $sid"
   done
 
-##### Adding Right Items #####
+# sketchybar --add alias "Control Centre,Clock" right \
+#   --set padding_right=0 
+  # --add alias "Control Centre,WiFi" right \
 
-sketchybar --add alias "Control Centre,Clock" right \
-  --add item volume right \
-  --set volume script="$PLUGIN_DIR/volume.sh" \
-  --subscribe volume volume_change \
-  --add alias "Control Centre,WiFi" right --set wifi click_script="open /System/Library/PreferencePanes/Network.prefPane" \
-  --add alias "Toggl Track,Item-0" right \
-  --add item battery right \
-  --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-  --subscribe battery system_woke power_source_change \
-  --add alias "Control Centre,Battery" right
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/battery.sh"
+source "$ITEM_DIR/volume.sh"
+source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/media.sh"
+sketchybar --add alias "Toggl Track,Item-0" right
 
 sketchybar --update
