@@ -20,3 +20,6 @@ cp -r ~/.config/sketchybar/ sketchybar
 
 echo "Copy alacritty"
 cp -r ~/.config/alacritty/ alacritty
+
+echo "Copy borders"
+cp -r ~/.config/borders/ borders

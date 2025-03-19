@@ -14,29 +14,28 @@ apps=$(aerospace list-windows --workspace "$1" | awk -F'|' '{gsub(/^ *| *$/, "",
 
 LABEL=""
 if [ "${apps}" != "" ]; then
+  padding_right=10
+
   while read -r app
   do
     __icon_map "$app"
     LABEL+="$icon_result"
+
   done <<< "${apps}"
 else
   LABEL=""
-fi
-
-if [ -n "$icon_strip" ]; then
-  padding_right=10
-else
   padding_right=0
 fi
+
 
 if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
     sketchybar --set space.$1 \
         background.drawing=on \
-        icon.color="$WHITE"  \
-        label.color="$WHITE"  \
+        icon.color="$LABEL_ACTIVE_SPACE_COLOR"  \
+        label.color="$LABEL_ACTIVE_SPACE_COLOR"  \
         icon="$1" \
         background.color="$BAR_COLOR" \
-        icon.font="$FONT:bold:12.0" \
+        icon.font="$FONT:Regular:12.0" \
         label="$LABEL" \
         label.padding_right="$padding_right"
 else
