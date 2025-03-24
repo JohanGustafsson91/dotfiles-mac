@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo $CONFIG_DIR
 source "$CONFIG_DIR/colors.sh"
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"

@@ -7,7 +7,7 @@ sketchybar --add item media right \
                        icon.padding_right=10 \
                        scroll_texts=on \
                        icon.font="sketchybar-app-font:Regular:16.0" \
-                       icon=":spotify:"         \
+                       icon=":playing:"         \
                        icon.color=$LABEL_COLOR   \
                        background.drawing=off \
                        script="$PLUGIN_DIR/media.sh" \
