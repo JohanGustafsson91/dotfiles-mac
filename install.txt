@@ -1,0 +1,38 @@
+# install brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# brew bundle --file=./Brewfile
+
+brew install git
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+brew install --cask nikitabobko/tap/aerospace
+brew install tmux
+
+# Clone dotfiles
+git clone https://github.com/JohanGustafsson91/dotfiles-mac.git ~/code/dotfiles-mac
+
+# Install font
+brew tap homebrew/cask-fonts
+brew install font-meslo-lg-nerd-font
+
+# Install alacritty
+brew install --cask alacritty
+cp -R ~/code/dotfiles-mac/alacritty ~/.config/alacritty
+cp -R ~/code/dotfiles-mac/aerospace.toml ~/.config/
+
+# Install neovim
+brew install neovim
+brew install ripgrep
+brew install node
+cp -R ~/code/dotfiles-mac/nvim ~/.config/nvim
+
+
+
+# Settings
+defaults write -g KeyRepeat -int 1
+defaults write -g InitialKeyRepeat -int 10
+
+defaults write -g com.apple.keyboard.fnState -bool true
+
