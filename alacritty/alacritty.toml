@@ -2,6 +2,10 @@ general.import = [
     "~/.config/alacritty/themes/themes/coolnight.toml"
 ]
 
+[terminal.shell]
+program = "/bin/zsh"
+args = ["--login"]
+
 [env]
 TERM = "xterm-256color"
 
@@ -19,3 +23,5 @@ blur = true
 normal.family = "MesloLGL Nerd Font Propo"
 
 size = 12
+
+[terminal]

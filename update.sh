@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Copy aerospace"
-cp ~/.config/aerospace/aerospace.toml aerospace.toml 
+cp ~/.config/.aerospace aerospace.toml 
 
 echo "Copy nvim"
 cp -r ~/.config/nvim/ nvim
