@@ -93,6 +93,9 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 	end,
 })
 
+-- Copilot
+keymap.set("n", "<leader>cppo", ":Copilot panel open<CR>", opts)
+
 -- Disable folding in Telescope's result window.
 vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })
 

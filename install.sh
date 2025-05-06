@@ -12,9 +12,8 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 
 # NVM
 mkdir ~/.nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" # This loads nvm
-[ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" # This loads nvm bash_completion
+echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.zshrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.zshrc
 nvm install node
 
 # Clone dotfiles
@@ -63,4 +62,5 @@ defaults write -g InitialKeyRepeat -int 10
 
 # Theme
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
-
+defaults write com.apple.dock showDesktopGestureEnabled -bool false && killall Dock
+defaults write com.apple.dock launchanim -bool false && killall Dock
