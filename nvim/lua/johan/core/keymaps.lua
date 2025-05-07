@@ -5,12 +5,10 @@ local keymap = vim.keymap -- for conciseness
 
 ---------------------
 -- General Keymaps -------------------
+vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
 
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
-
--- delete single character without copying into register
--- keymap.set("n", "x", '"_x')
 
 -- increment/decrement numbers
 keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
@@ -95,6 +93,7 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 
 -- Copilot
 keymap.set("n", "<leader>cppo", ":Copilot panel open<CR>", opts)
+keymap.set("n", "<leader>cpco", ":CopilotChat<CR>", opts)
 
 -- Disable folding in Telescope's result window.
 vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })
