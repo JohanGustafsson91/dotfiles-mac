@@ -12,3 +12,4 @@ alias tmux-open-project='bash ~/.config/scripts/code-in-tmux.sh'
 alias fp='bash ~/.config/scripts/fuzzy-select-project.sh'
 alias tks='bash ~/.config/scripts/kill-tmux-session.sh'
 alias fw="aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'"
+alias cc="node ~/.config/scripts/conventional-commits/index.mjs"

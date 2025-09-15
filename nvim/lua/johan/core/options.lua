@@ -1,44 +1,41 @@
-vim.cmd("let g:netrw_liststyle = 3")
+vim.cmd("let g:netrw_liststyle = 3") -- Set netrw file explorer to tree view
 
 local opt = vim.opt -- for conciseness
 
--- line numbers
-opt.relativenumber = true -- show relative line numbers
-opt.number = true -- shows absolute line number on cursor line (when relative number is on)
+-- Line numbers
+opt.relativenumber = true -- Show relative line numbers (useful for jumping lines)
+opt.number = true -- Show absolute line number on the current line
 
--- tabs & indentation
-opt.tabstop = 2 -- 2 spaces for tabs (prettier default)
-opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.expandtab = true -- expand tab to spaces
-opt.autoindent = true -- copy indent from current line when starting new one
+-- Tabs & indentation
+opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for
+opt.shiftwidth = 2 -- Number of spaces to use for each step of (auto)indent
+opt.expandtab = true -- Convert tabs to spaces
+opt.autoindent = true -- Copy indent from current line when starting a new one
 
--- line wrapping
-opt.wrap = false -- disable line wrapping
+-- Line wrapping
+opt.wrap = false -- Disable line wrapping (long lines won't wrap)
 
--- search settings
-opt.ignorecase = true -- ignore case when searching
-opt.smartcase = true -- if you include mixed case in your search, assumes you want case-sensitive
+-- Search settings
+opt.ignorecase = true -- Ignore case when searching
+opt.smartcase = true -- Override ignorecase if search contains uppercase letters
 
--- cursor line
-opt.cursorline = true -- highlight the current cursor line
+-- Cursor line
+opt.cursorline = true -- Highlight the line with the cursor
 
--- appearance
+-- Appearance
+opt.termguicolors = true -- Enable 24-bit RGB colors in the TUI (required for some colorschemes)
+opt.background = "dark" -- Set background for colorschemes that support it
+opt.signcolumn = "yes" -- Always show the sign column (prevents text shifting)
 
--- turn on termguicolors for nightfly colorscheme to work
--- (have to use iterm2 or any other true color terminal)
-opt.termguicolors = true
-opt.background = "dark" -- colorschemes that can be light or dark will be made dark
-opt.signcolumn = "yes" -- show sign column so that text doesn't shift
+-- Backspace
+opt.backspace = "indent,eol,start" -- Allow backspace over everything in insert mode
 
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
+-- Clipboard
+opt.clipboard:append("unnamedplus") -- Use system clipboard as default register
 
--- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+-- Split windows
+opt.splitright = true -- Vertical splits open to the right
+opt.splitbelow = true -- Horizontal splits open below
 
--- split windows
-opt.splitright = true -- split vertical window to the right
-opt.splitbelow = true -- split horizontal window to the bottom
-
--- turn off swapfile
-opt.swapfile = false
+-- Swapfile
+opt.swapfile = false -- Disable swapfile creation (prevents .swp files)

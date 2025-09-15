@@ -3,9 +3,9 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap -- for conciseness
 
----------------------
 -- General Keymaps -------------------
 vim.keymap.set("n", "<C-s>", ":w<CR>", { noremap = true, silent = true })
+vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true })
 
 -- clear search highlights
 keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
@@ -47,19 +47,19 @@ keymap.set("n", "<C-f>", "<C-f>zz", {})
 
 -- Folding
 keymap.set("n", "<leader>faf", ":g/).*{$/norm! $zf%<CR>", { desc = "Fold all functions" })
-vim.o.foldmethod = "indent" -- Use indentation to define folds
+-- vim.o.foldmethod = "indent" -- Use indentation to define folds
 -- vim.o.foldnestmax = 1 -- Set maximum nesting level for folds
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-	callback = function()
-		local total_lines = vim.fn.line("$") -- Get the total number of lines in the file
-		if total_lines > 52 then
-			vim.wo.foldlevel = 0 -- Close all folds
-		else
-			vim.wo.foldlevel = 99 -- Open all folds for smaller files
-		end
-	end,
-})
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+-- 	callback = function()
+-- 		local total_lines = vim.fn.line("$") -- Get the total number of lines in the file
+-- 		if total_lines > 52 then
+-- 			vim.wo.foldlevel = 0 -- Close all folds
+-- 		else
+-- 			vim.wo.foldlevel = 99 -- Open all folds for smaller files
+-- 		end
+-- 	end,
+-- })
 
 local last_cursor_position = nil
 
@@ -94,6 +94,27 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 -- Copilot
 keymap.set("n", "<leader>cppo", ":Copilot panel open<CR>", opts)
 keymap.set("n", "<leader>cpco", ":CopilotChat<CR>", opts)
+
+vim.keymap.set("n", "<leader>v", function()
+	local file = vim.api.nvim_buf_get_name(0)
+	if file == "" then
+		vim.notify("No file to open", vim.log.levels.WARN)
+		return
+	end
+	local line = vim.fn.line(".")
+	local handle = io.popen("git rev-parse --show-toplevel 2>/dev/null")
+	local git_root = handle and handle:read("*a") or ""
+	handle:close()
+
+	local root = git_root:gsub("%s+$", "") -- trim trailing newline
+
+	if root == "" then
+		root = vim.fn.getcwd()
+	end
+
+	-- Open VS Code in project root and jump to file:line
+	vim.fn.jobstart({ "code", root, "--goto", file .. ":" .. line }, { detach = true })
+end, { desc = "Open current project and file in VS Code" })
 
 -- Disable folding in Telescope's result window.
 vim.api.nvim_create_autocmd("FileType", { pattern = "TelescopeResults", command = [[setlocal nofoldenable]] })

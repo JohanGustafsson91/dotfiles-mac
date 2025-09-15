@@ -7,6 +7,10 @@ return {
 		},
 		build = "make tiktoken",
 		opts = {
+			layout = {
+				position = "bottom", -- | top | left | right
+				ratio = 0.3, -- | float | int
+			},
 			mappings = {
 				reset = {
 					normal = "<leader>rc",
