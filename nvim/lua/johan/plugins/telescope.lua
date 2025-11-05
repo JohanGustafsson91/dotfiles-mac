@@ -33,7 +33,7 @@ return {
 
 		telescope.setup({
 			defaults = {
-				file_ignore_patterns = { "node_modules", "dist", "build", "target", "vendor", ".next" },
+				-- file_ignore_patterns = { "node_modules", "dist", "build", "target", "vendor", ".next" },
 				path_display = { current_path_display },
 				mappings = {
 					i = {
@@ -43,23 +43,23 @@ return {
 					},
 				},
 			},
-			pickers = {
-				live_grep = {
-					vimgrep_arguments = {
-						"rg",
-						"--vimgrep",
-						"--smart-case",
-						"-uu", -- Search hidden and ignored files
-						"--glob", "!.git",
-						"--glob", "!node_modules",
-						"--glob", "!dist",
-						"--glob", "!build",
-						"--glob", "!target",
-						"--glob", "!vendor",
-						"--glob", "!.next",
-					},
-				},
-			},
+			-- pickers = {
+			-- 	live_grep = {
+			-- 		vimgrep_arguments = {
+			-- 			"rg",
+			-- 			"--vimgrep",
+			-- 			"--smart-case",
+			-- 			"-uu", -- Search hidden and ignored files
+			-- 			"--glob", "!.git",
+			-- 			"--glob", "!node_modules",
+			-- 			"--glob", "!dist",
+			-- 			"--glob", "!build",
+			-- 			"--glob", "!target",
+			-- 			"--glob", "!vendor",
+			-- 			"--glob", "!.next",
+			-- 		},
+			-- 	},
+			-- },
 		})
 
 		telescope.load_extension("fzf")
