@@ -1,60 +1,111 @@
+#!/bin/bash
+
+set -e
+
+# Color output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Get the directory where this script is located
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+echo -e "${BLUE}Dotfiles directory: ${DOTFILES_DIR}${NC}"
+
 # install brew
+echo -e "${GREEN}Installing Homebrew...${NC}"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-brew bundle --file=./Brewfile
+echo -e "${GREEN}Installing packages from Brewfile...${NC}"
+brew bundle --file="${DOTFILES_DIR}/Brewfile"
 
 # Change to zsh
+echo -e "${GREEN}Setting up zsh...${NC}"
 chsh -s /bin/zsh
-echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >> ~/.zshrc
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 
 # NVM
-mkdir ~/.nvm
+echo -e "${GREEN}Setting up NVM...${NC}"
+mkdir -p ~/.nvm
 echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.zshrc
 echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.zshrc
-nvm install node
 
-# Clone dotfiles
-mkdir code
-cd code
-git clone https://github.com/JohanGustafsson91/dotfiles-mac.git ~/code/dotfiles-mac
-cd dotfiles-mac/
+# Oh My Zsh
+echo -e "${GREEN}Installing Oh My Zsh...${NC}"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# Setup config
-mkdir -p ~/.config
-cp -R ~/code/dotfiles-mac/nvim ~/.config/nvim
+# Powerlevel10k
+echo -e "${GREEN}Installing Powerlevel10k...${NC}"
+git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' >> ~/.zshrc
 
-cp -R ~/code/dotfiles-mac/alacritty ~/.config/alacritty
-cd ~/.config/alacritty
-git clone https://github.com/alacritty/alacritty-theme themes
-curl https://raw.githubusercontent.com/josean-dev/dev-environment-files/main/.config/alacritty/themes/themes/coolnight.toml --output ~/.config/alacritty/themes/themes/coolnight.toml
+# Zsh plugins
+echo -e "${GREEN}Setting up zsh plugins...${NC}"
 echo "source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 echo "source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
-echo "ZSH_THEME="powerlevel10k/powerlevel10k"" >> ~/.zshrc
 
-cp -R ~/code/dotfiles-mac/aerospace.toml ~/.aerospace.toml
+# Function to safely create symlink
+create_symlink() {
+    local source="$1"
+    local target="$2"
+    
+    if [ -e "$target" ] || [ -L "$target" ]; then
+        echo -e "${BLUE}Backing up existing $target to ${target}.backup${NC}"
+        mv "$target" "${target}.backup"
+    fi
+    
+    echo -e "${GREEN}Creating symlink: $target -> $source${NC}"
+    ln -sf "$source" "$target"
+}
 
-cp -R ~/code/dotfiles-mac/aliases ~/.zsh_aliases
-echo "[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases" >> ~/.zshrc
+# Setup config directory
+mkdir -p ~/.config
 
-cp -R ~/code/dotfiles-mac/.tmux.conf ~/.tmux.conf
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# Create symlinks for dotfiles
+echo -e "${GREEN}Creating symlinks...${NC}"
 
-cp -R ~/code/dotfiles-mac/scripts/ ~/.config/scripts/
+create_symlink "${DOTFILES_DIR}/nvim" ~/.config/nvim
+create_symlink "${DOTFILES_DIR}/alacritty" ~/.config/alacritty
+create_symlink "${DOTFILES_DIR}/sketchybar" ~/.config/sketchybar
+create_symlink "${DOTFILES_DIR}/scripts" ~/.config/scripts
+create_symlink "${DOTFILES_DIR}/borders" ~/.config/borders
+create_symlink "${DOTFILES_DIR}/aerospace.toml" ~/.aerospace.toml
+create_symlink "${DOTFILES_DIR}/aliases" ~/.zsh_aliases
+create_symlink "${DOTFILES_DIR}/.tmux.conf" ~/.tmux.conf
 
-cp -R ~/code/dotfiles-mac/borders/ ~/.config/borders/
+# Alacritty themes (clone into alacritty directory)
+if [ ! -d "${DOTFILES_DIR}/alacritty/themes/.git" ]; then
+    echo -e "${GREEN}Cloning Alacritty themes...${NC}"
+    git clone https://github.com/alacritty/alacritty-theme "${DOTFILES_DIR}/alacritty/themes"
+    curl https://raw.githubusercontent.com/josean-dev/dev-environment-files/main/.config/alacritty/themes/themes/coolnight.toml --output "${DOTFILES_DIR}/alacritty/themes/themes/coolnight.toml"
+fi
 
-# Settings
+# Source aliases in zshrc
+if ! grep -q "source ~/.zsh_aliases" ~/.zshrc; then
+    echo "[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases" >> ~/.zshrc
+fi
+
+# Tmux plugin manager
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    echo -e "${GREEN}Installing Tmux Plugin Manager...${NC}"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+# Install node via nvm
+echo -e "${GREEN}Installing Node.js via NVM...${NC}"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm install node
+
+# macOS Settings
+echo -e "${GREEN}Applying macOS settings...${NC}"
 
 # Aerospace
-defaults write com.apple.dock expose-group-apps -bool true && killall Dock
-defaults write com.apple.spaces spans-displays -bool true && killall SystemUIServer
+defaults write com.apple.dock expose-group-apps -bool true
+defaults write com.apple.spaces spans-displays -bool true
 defaults write -g com.apple.keyboard.fnState -bool true
-defaults write com.apple.dock autohide -bool true && killall Dock
+defaults write com.apple.dock autohide -bool true
 
 # Keyboard
 defaults write -g KeyRepeat -int 1
@@ -62,5 +113,12 @@ defaults write -g InitialKeyRepeat -int 10
 
 # Theme
 osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to true'
-defaults write com.apple.dock showDesktopGestureEnabled -bool false && killall Dock
-defaults write com.apple.dock launchanim -bool false && killall Dock
+defaults write com.apple.dock showDesktopGestureEnabled -bool false
+defaults write com.apple.dock launchanim -bool false
+
+# Restart affected services
+killall Dock
+killall SystemUIServer
+
+echo -e "${GREEN}Done! Please restart your terminal.${NC}"
+echo -e "${BLUE}Note: Your dotfiles are now symlinked. Any changes you make will be reflected in ${DOTFILES_DIR}${NC}"
