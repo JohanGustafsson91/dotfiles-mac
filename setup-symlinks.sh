@@ -59,15 +59,24 @@ mkdir -p ~/.config
 echo -e "${BLUE}Creating symlinks...${NC}"
 echo ""
 
-# Create symlinks for dotfiles
-create_symlink "${DOTFILES_DIR}/nvim" ~/.config/nvim
-create_symlink "${DOTFILES_DIR}/alacritty" ~/.config/alacritty
-create_symlink "${DOTFILES_DIR}/sketchybar" ~/.config/sketchybar
-create_symlink "${DOTFILES_DIR}/scripts" ~/.config/scripts
-create_symlink "${DOTFILES_DIR}/borders" ~/.config/borders
-create_symlink "${DOTFILES_DIR}/aerospace.toml" ~/.aerospace.toml
-create_symlink "${DOTFILES_DIR}/aliases" ~/.zsh_aliases
-create_symlink "${DOTFILES_DIR}/.tmux.conf" ~/.tmux.conf
+# Define dotfiles to symlink: "source:target"
+DOTFILES=(
+    "nvim:.config/nvim"
+    "alacritty:.config/alacritty"
+    "sketchybar:.config/sketchybar"
+    "scripts:.config/scripts"
+    "borders:.config/borders"
+    "aerospace.toml:.aerospace.toml"
+    "aliases:.zsh_aliases"
+    ".tmux.conf:.tmux.conf"
+)
+
+# Create symlinks for all dotfiles
+for item in "${DOTFILES[@]}"; do
+    source_name="${item%%:*}"
+    target_path="${item##*:}"
+    create_symlink "${DOTFILES_DIR}/${source_name}" ~/${target_path}
+done
 
 echo ""
 echo -e "${GREEN}================================${NC}"
