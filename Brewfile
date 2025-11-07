@@ -51,7 +51,5 @@ cask "postman"
 cask "slack"
 # Music streaming service
 cask "spotify"
-# Break time reminder app
-cask "stretchly"
 # Video communication and virtual meeting platform
 cask "zoom"

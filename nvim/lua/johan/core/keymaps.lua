@@ -28,17 +28,12 @@ keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer
 
 local opts = { noremap = true, silent = true }
 
-keymap.set("n", "<leader>fgs", ":Telescope git_status<CR>", opts)
-keymap.set("n", "<leader>fgb", ":Telescope git_branches<CR>", opts)
-keymap.set("n", "<leader>fgc", ":Telescope git_commits<CR>", opts)
-
 keymap.set("n", "<leader>p", '"0p', { desc = "Paste and keep in buffer" })
 keymap.set("n", "<leader><space>", "/", { desc = "Open search" })
 
--- Buffers
-keymap.set("n", "<leader>bl", ":Telescope buffers<CR>", opts) -- List buffers and allow quick selection
-keymap.set("n", "<leader>bn", ":bn<CR>", opts)
-keymap.set("n", "<leader>bp", ":bp<CR>", opts)
+-- Buffers (telescope buffer list moved to telescope.lua)
+keymap.set("n", "<leader>bn", ":bn<CR>", { desc = "Next buffer" })
+keymap.set("n", "<leader>bp", ":bp<CR>", { desc = "Previous buffer" })
 
 keymap.set("n", "<C-u>", "<C-u>zz", {})
 keymap.set("n", "<C-d>", "<C-d>zz", {})
@@ -61,40 +56,13 @@ keymap.set("n", "<leader>faf", ":g/).*{$/norm! $zf%<CR>", { desc = "Fold all fun
 -- 	end,
 -- })
 
-local last_cursor_position = nil
+-- Center cursor after search movements
+keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
+keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
+keymap.set("n", "*", "*zzzv", { desc = "Search word under cursor (centered)" })
+keymap.set("n", "#", "#zzzv", { desc = "Search word backwards (centered)" })
 
--- Center after search or after jumping to the next match
-vim.api.nvim_create_autocmd("CmdlineLeave", {
-	pattern = { "/", "?" },
-	callback = function()
-		vim.defer_fn(function()
-			vim.cmd("normal! zz")
-		end, 1)
-	end,
-})
-
--- Center after * or n (next match)
-vim.api.nvim_create_autocmd("CursorMoved", {
-	callback = function()
-		local current_position = vim.api.nvim_win_get_cursor(0) -- [row, col]
-		local row_diff =
-			math.abs(current_position[1] - (last_cursor_position and last_cursor_position[1] or current_position[1]))
-
-		local search_info = vim.fn.searchcount()
-		if search_info.total > 0 and row_diff > 1 then
-			vim.defer_fn(function()
-				vim.cmd("normal! zz")
-			end, 1)
-		end
-
-		last_cursor_position = current_position
-	end,
-})
-
--- Copilot
-keymap.set("n", "<leader>cppo", ":Copilot panel open<CR>", opts)
-keymap.set("n", "<leader>cpco", ":CopilotChat<CR>", opts)
-
+-- Open current file in VS Code
 vim.keymap.set("n", "<leader>v", function()
 	local file = vim.api.nvim_buf_get_name(0)
 	if file == "" then

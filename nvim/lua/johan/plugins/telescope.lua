@@ -73,6 +73,14 @@ return {
 		keymap.set("n", "<leader>fl", "<cmd>Telescope resume<cr>", { desc = "Find resume" })
 		keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
 		keymap.set("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", { desc = "Find diagnostics" })
+		
+		-- Git keymaps
+		keymap.set("n", "<leader>fgs", "<cmd>Telescope git_status<cr>", { desc = "Git status" })
+		keymap.set("n", "<leader>fgb", "<cmd>Telescope git_branches<cr>", { desc = "Git branches" })
+		keymap.set("n", "<leader>fgc", "<cmd>Telescope git_commits<cr>", { desc = "Git commits" })
+		
+		-- Buffer management
+		keymap.set("n", "<leader>bl", "<cmd>Telescope buffers<cr>", { desc = "List buffers" })
 
 		keymap.set("n", "<leader>ftp", function()
 			toggle_path_display()
