@@ -43,23 +43,26 @@ return {
 					},
 				},
 			},
-			-- pickers = {
-			-- 	live_grep = {
-			-- 		vimgrep_arguments = {
-			-- 			"rg",
-			-- 			"--vimgrep",
-			-- 			"--smart-case",
-			-- 			"-uu", -- Search hidden and ignored files
-			-- 			"--glob", "!.git",
-			-- 			"--glob", "!node_modules",
-			-- 			"--glob", "!dist",
-			-- 			"--glob", "!build",
-			-- 			"--glob", "!target",
-			-- 			"--glob", "!vendor",
-			-- 			"--glob", "!.next",
-			-- 		},
-			-- 	},
-			-- },
+		pickers = {
+			live_grep = {
+				additional_args = function()
+					return {
+						"--hidden",
+						"--glob", "!.git/*",
+						"--glob", "!node_modules/*",
+						"--glob", "!dist/*",
+						"--glob", "!build/*",
+						"--glob", "!target/*",
+						"--glob", "!vendor/*",
+						"--glob", "!.next/*",
+					}
+				end,
+			},
+			find_files = {
+				hidden = true,
+				find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+			},
+		},
 		})
 
 		telescope.load_extension("fzf")
