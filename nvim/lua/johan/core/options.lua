@@ -39,3 +39,18 @@ opt.splitbelow = true -- Horizontal splits open below
 
 -- Swapfile
 opt.swapfile = false -- Disable swapfile creation (prevents .swp files)
+
+-- Auto-reload files when changed outside Vim
+opt.autoread = true -- Automatically read file when changed outside Vim
+
+-- Trigger autoread when files change on disk
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+	pattern = "*",
+	command = "if mode() != 'c' | checktime | endif",
+})
+
+-- Notification after file change
+vim.api.nvim_create_autocmd("FileChangedShellPost", {
+	pattern = "*",
+	command = "echohl WarningMsg | echo 'File changed on disk. Buffer reloaded.' | echohl None",
+})
