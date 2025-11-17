@@ -18,5 +18,42 @@ return {
 				layout = "diff2_horizontal",
 			},
 		},
+		keymaps = {
+			file_panel = {
+				{
+					"n",
+					"<cr>",
+					function()
+						require("diffview.actions").focus_entry()
+						vim.schedule(function()
+							vim.cmd("wincmd l")
+						end)
+					end,
+					{ desc = "Open the diff and focus right panel" },
+				},
+				{
+					"n",
+					"o",
+					function()
+						require("diffview.actions").focus_entry()
+						vim.schedule(function()
+							vim.cmd("wincmd l")
+						end)
+					end,
+					{ desc = "Open the diff and focus right panel" },
+				},
+				{
+					"n",
+					"l",
+					function()
+						require("diffview.actions").focus_entry()
+						vim.schedule(function()
+							vim.cmd("wincmd l")
+						end)
+					end,
+					{ desc = "Open the diff and focus right panel" },
+				},
+			},
+		},
 	},
 }
