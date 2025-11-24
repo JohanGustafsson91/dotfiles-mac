@@ -69,6 +69,7 @@ DOTFILES=(
     "aerospace.toml:.aerospace.toml"
     "aliases:.zsh_aliases"
     ".tmux.conf:.tmux.conf"
+    "opencode:.config/opencode/agent"
 )
 
 # Create symlinks for all dotfiles
