@@ -4,7 +4,7 @@ alias vim='nvim'
 alias ll="ls -all"
 alias cat='bat'
 
-alias persist-ssh='eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_ed25519'
+alias persist-ssh='eval "$(ssh-agent -s)" && ssh-add ~/.ssh/id_rsa'
 
 alias worklogs='cd /Users/johangustafsson/code/toggl-to-jira && npm start'
 alias vscode-launch='bash ~/code/vscode-launch-as-command/index.sh'
