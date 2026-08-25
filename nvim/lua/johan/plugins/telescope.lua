@@ -1,6 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
+	branch = "master",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -14,31 +14,23 @@ return {
 
 		local function toggle_path_display()
 			current_path_display = (current_path_display == "smart") and "absolute" or "smart"
-
-			telescope.setup({
-				defaults = {
-					path_display = { current_path_display },
-					mappings = {
-						i = {
-							["<C-k>"] = actions.move_selection_previous, -- move to prev result
-							["<C-j>"] = actions.move_selection_next, -- move to next result
-							["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
-						},
-					},
-				},
-			})
-
 			print("Telescope path display set to: " .. current_path_display)
 		end
 
 		telescope.setup({
 			defaults = {
-				-- file_ignore_patterns = { "node_modules", "dist", "build", "target", "vendor", ".next" },
-				path_display = { current_path_display },
+				path_display = function(_, path)
+					if current_path_display == "absolute" then
+						return path
+					end
+					-- smart: show only filename, but include parent if ambiguous
+					local tail = require("telescope.utils").path_tail(path)
+					return tail
+				end,
 				mappings = {
 					i = {
-						["<C-k>"] = actions.move_selection_previous, -- move to prev result
-						["<C-j>"] = actions.move_selection_next, -- move to next result
+						["<C-k>"] = actions.move_selection_previous,
+						["<C-j>"] = actions.move_selection_next,
 						["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
 					},
 				},

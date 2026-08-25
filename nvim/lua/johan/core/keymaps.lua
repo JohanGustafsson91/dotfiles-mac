@@ -26,8 +26,6 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
-local opts = { noremap = true, silent = true }
-
 keymap.set("n", "<leader>p", '"0p', { desc = "Paste and keep in buffer" })
 keymap.set("n", "<leader><space>", "/", { desc = "Open search" })
 
@@ -42,19 +40,6 @@ keymap.set("n", "<C-f>", "<C-f>zz", {})
 
 -- Folding
 keymap.set("n", "<leader>faf", ":g/).*{$/norm! $zf%<CR>", { desc = "Fold all functions" })
--- vim.o.foldmethod = "indent" -- Use indentation to define folds
--- vim.o.foldnestmax = 1 -- Set maximum nesting level for folds
-
--- vim.api.nvim_create_autocmd("BufReadPost", {
--- 	callback = function()
--- 		local total_lines = vim.fn.line("$") -- Get the total number of lines in the file
--- 		if total_lines > 52 then
--- 			vim.wo.foldlevel = 0 -- Close all folds
--- 		else
--- 			vim.wo.foldlevel = 99 -- Open all folds for smaller files
--- 		end
--- 	end,
--- })
 
 -- Center cursor after search movements
 keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })

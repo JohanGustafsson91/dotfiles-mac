@@ -1,4 +1,6 @@
-vim.cmd("let g:netrw_liststyle = 3") -- Set netrw file explorer to tree view
+-- Disable netrw early so it doesn't hijack directory opens (nvim-tree handles this instead)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 local opt = vim.opt -- for conciseness
 
@@ -39,6 +41,9 @@ opt.splitbelow = true -- Horizontal splits open below
 
 -- Swapfile
 opt.swapfile = false -- Disable swapfile creation (prevents .swp files)
+
+-- Folding (use treesitter folds but start with everything open)
+opt.foldlevel = 99
 
 -- Auto-reload files when changed outside Vim
 opt.autoread = true -- Automatically read file when changed outside Vim
