@@ -15,10 +15,18 @@ keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- incremen
 keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
 
 -- window management
-keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
-keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
+keymap.set("n", "<leader>sv", "<cmd>vsplit<CR>", { desc = "Split window vertically" })
+keymap.set("n", "<leader>sh", "<cmd>split<CR>", { desc = "Split window horizontally" })
+keymap.set("n", "<leader>se", function()
+	local cur_win = vim.api.nvim_get_current_win()
+	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		vim.api.nvim_set_option_value("winfixwidth", false, { win = win })
+		vim.api.nvim_set_option_value("winfixheight", false, { win = win })
+	end
+	vim.cmd("wincmd =")
+	vim.api.nvim_set_current_win(cur_win)
+end, { desc = "Make splits equal size" })
+keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
 
 keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
@@ -46,6 +54,13 @@ keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 keymap.set("n", "*", "*zzzv", { desc = "Search word under cursor (centered)" })
 keymap.set("n", "#", "#zzzv", { desc = "Search word backwards (centered)" })
+keymap.set("c", "<CR>", function()
+  local cmdtype = vim.fn.getcmdtype()
+  if cmdtype == "/" or cmdtype == "?" then
+    return "<CR>zz"
+  end
+  return "<CR>"
+end, { expr = true, desc = "Center after search jump" })
 
 -- Open current file in VS Code
 vim.keymap.set("n", "<leader>v", function()

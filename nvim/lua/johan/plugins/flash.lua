@@ -8,8 +8,8 @@ return {
 		},
 	},
 	keys = {
-		{ "s", function() require("flash").jump() end, mode = { "n", "x", "o" }, desc = "Flash jump" },
-		{ "S", function() require("flash").treesitter() end, mode = { "n", "x", "o" }, desc = "Flash treesitter" },
+		{ "s", function() require("flash").jump() vim.cmd("normal! zz") end, mode = { "n", "x", "o" }, desc = "Flash jump" },
+		{ "S", function() require("flash").treesitter() vim.cmd("normal! zz") end, mode = { "n", "x", "o" }, desc = "Flash treesitter" },
 	},
 	config = function(_, opts)
 		require("flash").setup(opts)

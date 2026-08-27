@@ -52,7 +52,16 @@ return {
 			},
 			find_files = {
 				hidden = true,
-				find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+				find_command = {
+					"rg", "--files", "--hidden",
+					"--glob", "!.git/*",
+					"--glob", "!node_modules/*",
+					"--glob", "!dist/*",
+					"--glob", "!build/*",
+					"--glob", "!target/*",
+					"--glob", "!vendor/*",
+					"--glob", "!.next/*",
+				},
 			},
 		},
 		})
