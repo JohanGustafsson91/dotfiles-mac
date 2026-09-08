@@ -27,6 +27,7 @@ keymap.set("n", "<leader>se", function()
 	vim.api.nvim_set_current_win(cur_win)
 end, { desc = "Make splits equal size" })
 keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+keymap.set("n", "<leader>sm", "<C-w>|", { desc = "Maximize current split" })
 
 keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
