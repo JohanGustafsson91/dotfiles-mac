@@ -70,6 +70,8 @@ DOTFILES=(
     "aliases:.zsh_aliases"
     ".tmux.conf:.tmux.conf"
     "opencode:.config/opencode/agent"
+    "claude-agents:.claude/agents"
+    "ai-prompts:.config/ai-prompts"
 )
 
 # Create symlinks for all dotfiles
